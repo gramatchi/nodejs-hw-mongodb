@@ -16,6 +16,7 @@ export const setupServer = () => {
   app.use(cors());
 
   // app.use(logger);
+  app.use(express.json());
 
   app.get('/', (req, res) => {
     res.json({

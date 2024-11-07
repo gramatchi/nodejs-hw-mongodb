@@ -5,6 +5,7 @@ import * as contactControllers from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import { validateBody } from '../utils/validateBody.js';
+import { parsePaginationParams } from '../middlewares/parsePaginationParams.js';
 
 import {
   contactAddSchema,
@@ -15,6 +16,7 @@ const contactsRouter = Router();
 
 contactsRouter.get(
   '/',
+  parsePaginationParams,
   ctrlWrapper(contactControllers.getAllContactsController),
 );
 

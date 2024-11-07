@@ -35,3 +35,23 @@ export const addContactController = async (req, res) => {
   });
   
 };
+
+export const upsertContactController = async (req, res) => {
+  const { id } = req.params;
+  
+  const { data, isNew } = await contactServices.updateContactById(
+    id,
+    req.body,
+    {
+      upsert: true,
+    }
+  );
+
+  const status = isNew ? 201 : 200;
+
+  res.status(status).json({
+    status,
+    message: 'Contact has upserted successfully',
+    data,
+  });
+};

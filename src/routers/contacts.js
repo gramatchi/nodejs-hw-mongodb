@@ -7,6 +7,9 @@ import { isValidId } from '../middlewares/isValidId.js';
 import { validateBody } from '../utils/validateBody.js';
 import { parsePaginationParams } from '../middlewares/parsePaginationParams.js';
 
+import { parseSortParamsDecorator } from '../utils/parseSortParams.js';
+import { sortByListContact } from '../db/models/Contact.js';
+
 import {
   contactAddSchema,
   contactUpdateSchema,
@@ -17,6 +20,7 @@ const contactsRouter = Router();
 contactsRouter.get(
   '/',
   parsePaginationParams,
+  parseSortParamsDecorator(sortByListContact),
   ctrlWrapper(contactControllers.getAllContactsController),
 );
 

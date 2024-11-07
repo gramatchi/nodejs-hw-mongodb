@@ -3,11 +3,13 @@ import * as contactServices from '../services/contacts.js';
 import createHttpError from 'http-errors';
 
 
+
 export const getAllContactsController = async (req, res) => {
   const { page, perPage} = req.query;
-  //console.log(page, perPage);
-  
-  const contacts = await contactServices.getContacts();
+  const contacts = await contactServices.getContacts({
+    page,
+    perPage,
+  });
   res.json({
     status: 200,
     message: 'Successfully found contacts!',

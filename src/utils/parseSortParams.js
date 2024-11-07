@@ -1,6 +1,6 @@
 const sortOrderList = ['asc', 'desc'];
 
-export const parseSortParamsDecorator = sortByList => {
+export const parseSortParamsDecorator = (sortByList) => {
   const func = (req, res, next) => {
     const { sortOrder, sortBy } = req.query;
     const parsedSortOrder = sortOrderList.includes(sortOrder)

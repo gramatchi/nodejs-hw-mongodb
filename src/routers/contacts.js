@@ -3,7 +3,7 @@ import { Router } from 'express';
 import * as contactControllers from '../controllers/contacts.js';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { isValidId } from '../middlewares/isValid.js'; 
+import { isValidId } from '../middlewares/isValidId.js'; 
 import { validateBody } from '../utils/validateBody.js';
 import { parsePaginationParams } from '../middlewares/parsePaginationParams.js';
 

@@ -3,9 +3,9 @@ import { Router } from 'express';
 import * as contactControllers from '../controllers/contacts.js';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { isValidId } from '../middlewares/isValidId.js'; 
 import { validateBody } from '../utils/validateBody.js';
 import { parsePaginationParams } from '../middlewares/parsePaginationParams.js';
+import { isValidId } from '../middlewares/validId.js';
 
 import { parseSortParamsDecorator } from '../utils/parseSortParams.js';
 import { sortByListContact } from '../db/models/Contact.js';

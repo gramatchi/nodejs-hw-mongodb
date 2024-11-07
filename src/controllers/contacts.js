@@ -5,10 +5,12 @@ import createHttpError from 'http-errors';
 
 
 export const getAllContactsController = async (req, res) => {
-  const { page, perPage} = req.query;
+  const { page, perPage, sortBy, sortOrder} = req.query;
   const contacts = await contactServices.getContacts({
     page,
     perPage,
+    sortBy,
+    sortOrder,
   });
   res.json({
     status: 200,

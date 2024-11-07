@@ -34,11 +34,19 @@ const contactSchema = new Schema(
   },
 );
 
-contactSchema.post("save", handleSaveError);
+contactSchema.post('save', handleSaveError);
 
-contactSchema.pre("findOneAndUpdate", setUpdateSettings);
+contactSchema.pre('findOneAndUpdate', setUpdateSettings);
 
-contactSchema.post("findOneAndUpdate", handleSaveError);
+contactSchema.post('findOneAndUpdate', handleSaveError);
+
+export const sortByListContact = [
+  'name',
+  'phoneNumber',
+  'email',
+  'isFavorite',
+  'contactType',
+];
 
 const ContactCollection = model('my-contacts', contactSchema);
 

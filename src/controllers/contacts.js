@@ -1,14 +1,21 @@
 import * as contactServices from '../services/contacts.js';
 
 import createHttpError from 'http-errors';
+import { parseContactsFilter } from "../utils/parseContactsFilter.js";
 
 export const getAllContactsController = async (req, res) => {
   const { page, perPage, sortBy, sortOrder } = req.query;
+
+  const {_id: userId} = req.user;
+  const filter = parseContactsFilter(req.query);
+  filter.userId = userId;
+
   const contacts = await contactServices.getContacts({
     page,
     perPage,
     sortBy,
     sortOrder,
+    filter
   });
   res.json({
     status: 200,
@@ -32,7 +39,10 @@ export const contactByIdController = async (req, res) => {
 };
 
 export const addContactController = async (req, res) => {
-  const data = await contactServices.addContact(req.body);
+  const userId = req.user._id;
+  const data = await contactServices.addContact({ ...req.body, userId });
+
+  //console.log(req.user);
 
   res.status(201).json({
     status: 201,

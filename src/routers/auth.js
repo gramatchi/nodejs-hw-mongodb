@@ -5,6 +5,9 @@ import { validateBody } from '../utils/validateBody.js';
 import { userLoginSchema, userRegisterSchema } from '../validation/users.js';
 import * as authControllers from '../controllers/auth.js';
 
+import { sendResetEmailSchema } from '../validation/users.js';
+import { resetPasswordSchema } from '../validation/users.js';
+
 const authRouter = Router();
 
 authRouter.post(
@@ -25,5 +28,17 @@ authRouter.post(
 );
 
 authRouter.post('/logout', ctrlWrapper(authControllers.logoutController));
+
+authRouter.post(
+  '/send-reset-email',
+  validateBody(sendResetEmailSchema),
+  ctrlWrapper(authControllers.sendResetEmailController),
+);
+
+authRouter.post(
+  '/reset-pwd',
+  validateBody(resetPasswordSchema),
+  ctrlWrapper(authControllers.resetPasswordController),
+);
 
 export default authRouter;

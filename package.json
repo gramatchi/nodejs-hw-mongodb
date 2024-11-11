@@ -19,6 +19,7 @@
     "pino-pretty": "^11.3.0"
   },
   "dependencies": {
+    "@elasticemail/elasticemail-client": "^4.0.23",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",

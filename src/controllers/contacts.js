@@ -2,6 +2,13 @@ import * as contactServices from '../services/contacts.js';
 
 import createHttpError from 'http-errors';
 import { parseContactsFilter } from '../utils/parseContactsFilter.js';
+import * as path from 'node:path';
+
+import { saveFileToUploadsDir } from '../utils/saveFileToUploadDir.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+import { env } from '../utils/env.js';
+
+const enable_cloudinary = env('ENABLE_CLOUDINARY') === 'true';
 
 export const getAllContactsController = async (req, res) => {
   const { page, perPage, sortBy, sortOrder } = req.query;
@@ -41,9 +48,18 @@ export const contactByIdController = async (req, res) => {
 
 export const addContactController = async (req, res) => {
   const userId = req.user._id;
-  const data = await contactServices.addContact({ ...req.body, userId });
 
   //console.log(req.user);
+  let photo = '';
+  if (req.file) {
+    if (enable_cloudinary) {
+      photo = await saveFileToCloudinary(req.file);
+    } else {
+      await saveFileToUploadsDir(req.file, 'photos');
+      photo = path.join('photos', req.file.filename);
+    }
+  }
+  const data = await contactServices.addContact({ ...req.body, userId, photo });
 
   res.status(201).json({
     status: 201,
@@ -75,8 +91,24 @@ export const upsertContactController = async (req, res) => {
 
 export const patchContactController = async (req, res) => {
   const { id } = req.params;
+
+  let photo = '';
+  if (req.file) {
+    if (enable_cloudinary) {
+      photo = await saveFileToCloudinary(req.file);
+    } else {
+      await saveFileToUploadsDir(req.file, 'photos');
+      photo = path.join('photos', req.file.filename);
+    }
+  }
   const { _id: userId } = req.user;
-  const result = await contactServices.updateContact({ _id: id, userId }, req.body);
+  const result = await contactServices.updateContact(
+    { _id: id, userId },
+    {
+      photo,
+      ...req.body,
+    }
+  );
 
   if (!result) {
     throw createHttpError(404, `Contact with id=${id} not found`);

@@ -11,6 +11,7 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 import { UPLOAD_DIR } from './constants/index.js';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 
 
@@ -34,12 +35,13 @@ export const setupServer = () => {
 
   app.use('/contacts', contactsRouter);
 
+  app.use('/uploads', express.static(UPLOAD_DIR));
+  app.use('/api-docs', swaggerDocs());
+
   app.use(notFoundHandler);
 
   app.use(errorHandler);
 
-  app.use('/uploads', express.static(UPLOAD_DIR));
-  app.use(express.static('uploads'));
 
   const PORT = Number(env.PORT) || 3000;
 

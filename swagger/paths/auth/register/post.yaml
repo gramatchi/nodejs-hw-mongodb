@@ -1,0 +1,52 @@
+tags:
+  - Auth
+summary: Create contact
+security:
+  - bearerAuth: []
+operationId: createUser
+description: 'Create a contact with payload'
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - name
+          - email
+          - password
+        properties:
+          name:
+            description: 'User name'
+            type: string
+            example: 'John Doe'
+          email:
+            description: 'User email address'
+            type: string
+            example: JohnDoe@mail.com
+          password:
+            description: 'Password'
+            type: string
+            example: 65e4decdd
+responses:
+  '200':
+    description: Creates a user
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a contact!
+            data:
+              type: object
+              example: accessToken
+  '401':
+    $ref: '../../../components/responses/401.yaml'

@@ -1,0 +1,20 @@
+# swagger/components/schemas/contact.yaml
+
+type: object
+required:
+  - _id
+  - name
+  - email
+properties:
+  _id:
+    description: 'User id'
+    type: string
+    example: 673189e2bf08d8c61128e170
+  name:
+    description: "Contact's name"
+    type: string
+    example: 'John Doe'
+  email:
+    description: 'Contact email address'
+    type: string
+    example: JohnDoe@mail.com
